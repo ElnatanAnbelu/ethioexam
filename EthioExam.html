@@ -103,7 +103,7 @@ input{font-family:inherit;}
 .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;}
 .tnum{font-variant-numeric:tabular-nums;}
 
-#app{max-width:var(--grid-max);margin:0 auto;padding:var(--page-pad-mobile);padding-bottom:var(--sp-16);}
+#app{max-width:var(--grid-max);margin:0 auto;padding:calc(var(--page-pad-mobile) + env(safe-area-inset-top)) var(--page-pad-mobile) calc(var(--sp-16) + env(safe-area-inset-bottom));}
 .screen{}
 section[role="region"]{max-width:var(--content-max);margin:0 auto;}
 section#screen-home{max-width:var(--grid-max);}
@@ -271,8 +271,8 @@ section#screen-home{max-width:var(--grid-max);}
 /* ============================ SESSION ============================ */
 .session-header{
   position:sticky;top:0;z-index:var(--z-sticky);background:var(--surface);border-bottom:1px solid var(--border);
-  margin:calc(-1*var(--page-pad-mobile)) calc(-1*var(--page-pad-mobile)) var(--sp-4);
-  padding:var(--sp-2) var(--page-pad-mobile);display:flex;align-items:center;gap:var(--sp-3);
+  margin:calc(-1*(var(--page-pad-mobile) + env(safe-area-inset-top))) calc(-1*var(--page-pad-mobile)) var(--sp-4);
+  padding:calc(var(--sp-2) + env(safe-area-inset-top)) var(--page-pad-mobile) var(--sp-2);display:flex;align-items:center;gap:var(--sp-3);
 }
 .session-header .sh-center{flex:1;min-width:0;}
 .qcount{font-size:var(--fs-small);color:var(--text-muted);margin-bottom:4px;}
@@ -502,8 +502,8 @@ section#screen-home{max-width:var(--grid-max);}
 .toast.error{border-color:var(--danger-border);}
 
 @media(min-width:768px){
-  #app{padding:var(--page-pad-laptop);}
-  .session-header{margin:calc(-1*var(--page-pad-laptop)) calc(-1*var(--page-pad-laptop)) var(--sp-4);padding:var(--sp-2) var(--page-pad-laptop);}
+  #app{padding:calc(var(--page-pad-laptop) + env(safe-area-inset-top)) var(--page-pad-laptop) var(--page-pad-laptop);}
+  .session-header{margin:calc(-1*(var(--page-pad-laptop) + env(safe-area-inset-top))) calc(-1*var(--page-pad-laptop)) var(--sp-4);padding:calc(var(--sp-2) + env(safe-area-inset-top)) var(--page-pad-laptop) var(--sp-2);}
   .subject-grid{grid-template-columns:repeat(3,1fr);gap:var(--sp-5);}
   .progress-strip{gap:var(--sp-4);}
   .setup-actions .btn-primary{margin-left:0;}

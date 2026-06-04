@@ -1,6 +1,6 @@
 /* EthioExam service worker — offline app shell cache.
-   Bump CACHE when EthioExam.html or assets change to force an update. */
-const CACHE = 'ethioexam-v1';
+   Bump CACHE when EthioExam.html or assets change to force a refresh on devices. */
+const CACHE = 'ethioexam-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -33,25 +33,35 @@ self.addEventListener('fetch', (e) => {
   let url;
   try { url = new URL(req.url); } catch (_) { return; }
 
-  // Never intercept the AI API calls — let them go straight to the network.
+  // Never intercept the AI API calls — straight to the network.
   if (url.hostname.endsWith('googleapis.com') || url.hostname.endsWith('groq.com')) return;
-  // Only handle GET; leave POST/etc. to the network.
   if (req.method !== 'GET') return;
 
-  e.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((resp) => {
-        // Cache successful same-origin GET responses for future offline use.
+  // HTML navigations → NETWORK-FIRST so app updates land as soon as the device is online,
+  // falling back to the cached shell when offline.
+  if (req.mode === 'navigate') {
+    e.respondWith(
+      fetch(req).then((resp) => {
         if (resp && resp.ok && url.origin === self.location.origin) {
           const copy = resp.clone();
           caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
         }
         return resp;
       }).catch(() =>
-        // Offline fallback: serve the app shell for navigations.
-        caches.match('./EthioExam.html').then((r) => r || caches.match('./index.html'))
-      );
-    })
+        caches.match(req).then((r) => r || caches.match('./EthioExam.html').then((x) => x || caches.match('./index.html')))
+      )
+    );
+    return;
+  }
+
+  // Static assets (icons, manifest) → CACHE-FIRST.
+  e.respondWith(
+    caches.match(req).then((cached) => cached || fetch(req).then((resp) => {
+      if (resp && resp.ok && url.origin === self.location.origin) {
+        const copy = resp.clone();
+        caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+      }
+      return resp;
+    }).catch(() => undefined))
   );
 });
