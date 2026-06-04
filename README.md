@@ -3,15 +3,24 @@
 An offline practice app for the six national-exam subjects. One file, no install, no account,
 no internet needed for the core. Open it and start practicing in one tap.
 
-## How to use it
+## 📱 Install it (recommended — iPhone, iPad, and laptop)
+
+**Open this link in Safari/Chrome:** https://elnatananbelu.github.io/ethioexam/
+
+Then **Share → Add to Home Screen** (iPhone/iPad) — you get a real app icon that opens full-screen
+and **works offline** after the first open (it caches itself on the device). On a laptop you can just
+bookmark it or, in Safari, **File → Add to Dock**.
+
+This is the easiest path on iPhone, which won't run a downloaded local `.html` file directly.
+
+## Or use the local file (Mac only, no internet)
 
 ### On a laptop
 Double-click **`EthioExam.html`**. It opens in your browser straight to the subject grid.
 
-### On an iPad
-1. Put `EthioExam.html` on the iPad (AirDrop it, email it to yourself, or save it into the **Files** app).
-2. Open the **Files** app → tap `EthioExam.html` → it opens in Safari. That's it.
-   - Tip: in Safari, tap **Share → Add to Home Screen** to get an app-style icon.
+### On iPhone/iPad
+iOS won't run a local `.html` file's JavaScript from the Files/Mail preview — use the **install link
+above** instead (that's exactly why the hosted version exists).
 
 Everything works fully offline: all 408 verified science/math questions, both practice and mock-exam
 modes, scores, streaks, and the progress dashboard. Progress is saved on the device.
