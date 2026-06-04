@@ -45,6 +45,6 @@ Integrity: 0 malformed rows, 0 duplicate IDs across all 3,787. `node --check` cl
   not yet needed.
 
 ## How to extend further
-Edit `banks/qb-<subject>.js` (compact rows, see `FORMAT.md`), then re-inline into `index.html`'s
+Edit `banks/qb-<subject>.js` (compact rows, see `FORMAT.md`), then re-inline into `EthioExam.html`'s
 `window.QB_<SUBJECT>` array and re-run `node --check` + the hydration count. The generate/verify workflow
 script used for this pass is reusable (parameterized by subject via `args`).

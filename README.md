@@ -6,11 +6,11 @@ no internet needed for the core. Open it and start practicing in one tap.
 ## How to use it
 
 ### On a laptop
-Double-click **`index.html`**. It opens in your browser straight to the subject grid.
+Double-click **`EthioExam.html`**. It opens in your browser straight to the subject grid.
 
 ### On an iPad
-1. Put `index.html` on the iPad (AirDrop it, email it to yourself, or save it into the **Files** app).
-2. Open the **Files** app → tap `index.html` → it opens in Safari. That's it.
+1. Put `EthioExam.html` on the iPad (AirDrop it, email it to yourself, or save it into the **Files** app).
+2. Open the **Files** app → tap `EthioExam.html` → it opens in Safari. That's it.
    - Tip: in Safari, tap **Share → Add to Home Screen** to get an app-style icon.
 
 Everything works fully offline: all 408 verified science/math questions, both practice and mock-exam
@@ -45,4 +45,4 @@ you from practicing.
 ## Adding more curated questions later
 The curated bank lives in `banks/bank-*.js` (one file per subject), each a plain array of question
 objects in the schema documented in `SPEC.md`. To regenerate the single file after editing a bank,
-re-inline the four bank files into `index.html` at the build step described in `CLAUDE.md`.
+re-inline the four bank files into `EthioExam.html` at the build step described in `CLAUDE.md`.

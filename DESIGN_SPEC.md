@@ -2,7 +2,7 @@
 
 > **Status:** Implementation-ready. Build to this EXACTLY. The engineer implements; they do not invent UI.
 > **Source of truth for content/behavior:** `SPEC.md` (frozen). This document is the source of truth for visual design, layout, states, copy, and accessibility.
-> **Scope:** One self-contained `index.html`, vanilla JS, single inline `<style>`. No frameworks, no CDN, no web fonts. Offline-first. English UI only.
+> **Scope:** One self-contained `EthioExam.html`, vanilla JS, single inline `<style>`. No frameworks, no CDN, no web fonts. Offline-first. English UI only.
 > **Quality bar:** Linear / Duolingo / Notion-grade polish. Calm, modern, premium. Mobile/tablet-first (iPad portrait + laptop).
 
 ---

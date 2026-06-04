@@ -5,7 +5,7 @@
 > Grade 12 Natural Science national exam (EUEE / ESSLCE). English UI only (NOT bilingual).
 
 ## Hard constraints (non-negotiable)
-1. The entire app is ONE self-contained `index.html`. All HTML, CSS, JS, and the curated
+1. The entire app is ONE self-contained `EthioExam.html`. All HTML, CSS, JS, and the curated
    question bank inline. No build step, no bundler, no `npm install`, no external files.
 2. Vanilla JS only. No frameworks, no CDN, no `<script src>` to any URL. Must run fully
    offline by opening the file (`file://`) on iPad Safari and on a laptop.
@@ -165,7 +165,7 @@ and is unavailable (curated subjects' mocks always work offline).
   not crash the app; fall back to defaults.
 
 ## Acceptance criteria (the gate)
-- Double-click `index.html` (laptop) or open in iPad Safari → lands directly on the subject grid; no
+- Double-click `EthioExam.html` (laptop) or open in iPad Safari → lands directly on the subject grid; no
   login, no splash, no internet needed.
 - A full curated practice session works offline with explanations.
 - Mock exam mode matches the real counts/timing per subject and shows a full review.

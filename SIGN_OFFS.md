@@ -1,6 +1,6 @@
 # SIGN_OFFS.md — Ethiopian Grade 9–12 Exam-Practice App
 
-Final state: single self-contained `index.html`, **3,787 curated questions** (Physics 969, Chemistry 936,
+Final state: single self-contained `EthioExam.html`, **3,787 curated questions** (Physics 969, Chemistry 936,
 Biology 970, Math 912), Grades 9–12, all official MoE units, plus AI English/SAT (Groq + Gemini). Offline,
 no login, backup/restore, grade filter, grade-weighted mock exams. ~1.6 MB, loads on iPad Safari + laptop.
 

@@ -5,7 +5,7 @@ A self-contained, offline practice/quiz app for the Ethiopian Grade 12 Natural S
 (EUEE/ESSLCE), for a single student. Six subjects, four difficulty tiers, practice + timed mock-exam
 modes, progress dashboard, dark/light themes. Hybrid question bank: a **verified curated bank** for the
 STEM subjects (Physics, Chemistry, Biology, Mathematics) and **AI-generated** questions for English & SAT
-(plus optional AI extra practice for sciences). The deliverable is one file: `index.html`.
+(plus optional AI extra practice for sciences). The deliverable is one file: `EthioExam.html`.
 
 ## Tech stack
 - **Pure single-file web app.** Vanilla HTML + CSS + JavaScript, all inline. No framework, no bundler,
@@ -18,7 +18,7 @@ STEM subjects (Physics, Chemistry, Biology, Mathematics) and **AI-generated** qu
 ## Key design decisions
 - **Single inline file by hard constraint:** iPad Safari blocks `fetch()` of local files over `file://`,
   so the curated bank and all code must be embedded — no external JS. The four `banks/bank-*.js` files are
-  intermediate source; they are inlined into `index.html` at assembly.
+  intermediate source; they are inlined into `EthioExam.html` at assembly.
 - **Accuracy gate on curated STEM content:** a wrong "correct" answer teaches the student wrong, so every
   curated question was generated AND independently re-solved by a separate adversarial verifier (math/physics
   keys recomputed in Node). 5 wrong keys were caught and fixed this way.
@@ -31,7 +31,7 @@ STEM subjects (Physics, Chemistry, Biology, Mathematics) and **AI-generated** qu
 ## Where everything lives
 ```
 ethio-exam-prep/
-├── index.html        ← THE deliverable: complete app + 408 curated questions inlined
+├── EthioExam.html        ← THE deliverable: complete app + 408 curated questions inlined
 ├── banks/            ← curated question source of truth, COMPACT format (edit here, then re-inline)
 │   ├── qb-physics.js     (window.QB_PHYSICS = [...])    969 Qs
 │   ├── qb-chemistry.js   (window.QB_CHEMISTRY = [...])  936 Qs
@@ -45,20 +45,20 @@ ethio-exam-prep/
 ├── SIGN_OFFS.md      ← pipeline sign-off record
 └── CLAUDE.md         ← this file
 ```
-Inside `index.html`, the curated questions sit between the `window.BANK_PHYSICS` definition and the
+Inside `EthioExam.html`, the curated questions sit between the `window.BANK_PHYSICS` definition and the
 `const CURATED_BANK = [].concat(...)` line, in a block headed `/* ===== CURATED BANK (injected at assembly ...) */`.
 
 ## How to run it locally
 Just open the file — no server needed:
 ```bash
-open index.html            # macOS; or double-click it
+open EthioExam.html            # macOS; or double-click it
 ```
 (For dev with live console/network inspection, any static server works, e.g. `python3 -m http.server`,
 but it is NOT required and the app does no local fetches.)
 
 ## How to add/edit curated questions (re-inline step)
 1. Edit the relevant `banks/bank-<subject>.js` (keep the exact schema in `SPEC.md`; `node --check` it).
-2. Re-inline all four banks into `index.html`, replacing the current curated block. The original assembly
+2. Re-inline all four banks into `EthioExam.html`, replacing the current curated block. The original assembly
    replaced the marker `/*__CURATED_BANK_INJECTION__*/` with the concatenated bank files; to update, swap
    the existing `/* ===== CURATED BANK ... */ ... ` block with the new bank file contents (same order:
    physics, chemistry, biology, math), keeping the trailing `const CURATED_BANK = [].concat(...)` intact.
