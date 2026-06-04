@@ -1,0 +1,16 @@
+{
+  "name": "EthioExam — Grade 9–12 Natural Science",
+  "short_name": "EthioExam",
+  "description": "Offline practice for the Ethiopian Grade 9–12 Natural Science national exam (ESSLCE/EUEE).",
+  "start_url": "./EthioExam.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0E1116",
+  "theme_color": "#0E1116",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

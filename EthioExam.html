@@ -5,10 +5,19 @@
 <!-- Defense-in-depth CSP: untrusted bank/AI text never reaches an HTML sink (all via textContent),
      and the only network egress is pinned to the supported AI hosts (Gemini + Groq) so a future bug can't exfiltrate elsewhere.
      'unsafe-inline' is unavoidable for a single-file inline app and is safe here given the textContent rendering. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src https://generativelanguage.googleapis.com https://api.groq.com; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com https://api.groq.com; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0E1116">
 <title>Exam Prep — Grade 12 Natural Science</title>
+<!-- PWA: installable, offline app shell -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EthioExam">
 <style>
 /* ============================ DESIGN TOKENS ============================ */
 :root{
@@ -6463,6 +6472,14 @@ function init(){
   }
 }
 init();
+</script>
+<script>
+/* PWA: register the offline service worker. No-op on file:// (local open) and where unsupported. */
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
 </script>
 </body>
 </html>
