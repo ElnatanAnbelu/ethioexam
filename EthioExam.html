@@ -7,7 +7,7 @@
      and the only network egress is pinned to the supported AI hosts (Gemini + Groq) so a future bug can't exfiltrate elsewhere.
      'unsafe-inline' is unavoidable for a single-file inline app and is safe here given the textContent rendering. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com https://api.groq.com; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#5b3df5">
 <title>Exam Prep — Grade 12 Natural Science</title>
@@ -1684,7 +1684,7 @@ function cycleFontSize(){
   const next = FS_ORDER[(FS_ORDER.indexOf(cur)+1) % FS_ORDER.length];
   applyFontSize(next);
   safeSet(FS_KEY, next);
-  try{ toast("Text size: " + FS_LABEL[next]); }catch(e){}
+  /* no toast on text-size change (per user preference) */
 }
 
 /* ============================ AI PROVIDER + KEY ============================ */
@@ -1745,8 +1745,8 @@ function subjectGlyph(accent){
   const g = {
     physics:'<circle cx="12" cy="12" r="2.2"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/>',
     chemistry:'<path d="M9 3v6l-5 8a2 2 0 0 0 1.7 3h12.6A2 2 0 0 0 20 17l-5-8V3"/><line x1="8" y1="3" x2="16" y2="3"/><line x1="7" y1="14" x2="17" y2="14"/>',
-    biology:'<path d="M5 3c0 6 14 6 14 18M19 3C19 9 5 9 5 21"/><line x1="7" y1="6" x2="17" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="7" y1="18" x2="17" y2="18"/>',
-    math:'<line x1="5" y1="9" x2="11" y2="9"/><line x1="5" y1="15" x2="11" y2="15"/><line x1="14" y1="7" x2="20" y2="7"/><line x1="17" y1="4" x2="17" y2="10"/><line x1="14" y1="17" x2="20" y2="17"/><line x1="14" y1="15" x2="20" y2="19"/><line x1="20" y1="15" x2="14" y2="19"/>',
+    biology:'<path d="M8 4c0 5 8 5 8 8s-8 3-8 8"/><path d="M16 4c0 5-8 5-8 8s8 3 8 8"/><line x1="9.5" y1="7" x2="14.5" y2="7"/><line x1="9.5" y1="17" x2="14.5" y2="17"/>',
+    math:'<line x1="5" y1="12" x2="19" y2="12"/><circle cx="12" cy="6.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="17.5" r="1.4" fill="currentColor" stroke="none"/>',
     english:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
     sat:'<path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><polyline points="9 12 11 14 15 10"/>',
   }[accent] || '';
