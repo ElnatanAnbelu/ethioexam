@@ -1690,10 +1690,14 @@ function isValidQ(q){
     typeof q.options.A==="string" && typeof q.options.B==="string" && typeof q.options.C==="string" && typeof q.options.D==="string" &&
     ["A","B","C","D"].includes(q.correct) && typeof q.explanation==="string";
 }
-// Show ALL questions (every tier). The full bank loads on startup; each question still
-// carries its honest per-item badge (Past exam / Verified / Unverified).
-function bankFor(subjectId){ return CURATED_BANK.filter(q=>q && q.subject===subjectId && isValidQ(q)); }
-function bankForAll(subjectId){ return bankFor(subjectId); }
+// DEFAULT honest view = trustworthy tiers only (1 = past exam, 2 = verified practice).
+// Tier 3 (unverified practice) is revealed only when the user opts in via STATE.showUnverified.
+function bankFor(subjectId){
+  const showUnv = typeof STATE!=="undefined" && STATE.showUnverified;
+  return CURATED_BANK.filter(q=>q && q.subject===subjectId && isValidQ(q) && (showUnv || q.tier<=2));
+}
+// Full bank ignoring the tier toggle — for honest per-subject availability counts.
+function bankForAll(subjectId){ return CURATED_BANK.filter(q=>q && q.subject===subjectId && isValidQ(q)); }
 function unitsFor(subjectId){
   const sub = SUBJECT_BY_ID[subjectId];
   if(sub && sub.source==="ai") return AI_UNITS[subjectId] || [];
@@ -2062,13 +2066,31 @@ function renderUnits(){
   else { subEl.textContent = units.length+" units · "+totalQ+" questions in the bank"; }
   sec.append(subEl);
 
-  // Every question shows. If the full bank hasn't finished loading yet, load it and refresh
-  // counts. Each question is still labeled by source (past exam / verified / unverified).
-  if(!isAI && !UNVERIFIED_LOADED){
-    loadUnverified().then(function(ok){ if(ok && STATE.view==="units" && STATE.subject===sub.id) showView("units"); });
-    sec.append(el("p",{class:"helper",text:"Loading the full question bank…"}));
-  } else if(!isAI){
-    sec.append(el("p",{class:"helper",text:"Each question is labeled by source: past exam, verified, or unverified."}));
+  // Trust toggle: default view = past exams + verified practice; Tier 3 lazy-loaded on opt-in.
+  if(!isAI){
+    const trustedN = bankFor(sub.id).filter(q=>q.tier<=2).length;
+    const tw = el("div",{class:"switch-row",style:"margin-top:var(--sp-3)"});
+    const sw = el("button",{class:"switch",role:"switch","aria-checked":STATE.showUnverified?"true":"false","aria-label":"Show unverified practice questions"});
+    sw.append(el("span",{class:"knob"}));
+    const lbl = el("span",{class:"switch-label",text:"Show unverified practice questions"});
+    sw.addEventListener("click",()=>{
+      if(!STATE.showUnverified){
+        // turning ON — load the Tier-3 bank first (once), then reveal
+        sw.setAttribute("aria-checked","true"); sw.setAttribute("aria-disabled","true");
+        loadUnverified().then(function(ok){
+          sw.removeAttribute("aria-disabled");
+          if(ok){ STATE.showUnverified=true; STATE.unit=null; showView("units"); }
+          else { sw.setAttribute("aria-checked","false"); toast("Couldn't load the unverified question set. Check your connection and try again.","error"); }
+        });
+      } else {
+        STATE.showUnverified=false; STATE.unit=null; showView("units");
+      }
+    });
+    tw.append(sw,lbl);
+    sec.append(tw);
+    sec.append(el("p",{class:"helper",text: STATE.showUnverified
+      ? ("Showing all questions. Unverified ones are generated from the textbook but not yet independently checked — treat with care.")
+      : ("Showing "+trustedN+" trusted questions (past exams + verified practice). Turn this on to also load unverified practice questions.")}));
   }
 
   if(!isAI && units.length===0){
@@ -3553,8 +3575,6 @@ function init(){
   loadProgress();
   $("gearBtn").addEventListener("click",()=>openSettings(false));
   showView("home");
-  // Load the full question bank (all tiers) in the background so every subject/grade is complete.
-  loadUnverified().then(function(ok){ if(ok && (STATE.view==="units"||STATE.view==="dashboard")) showView(STATE.view); });
   if(progressCorrupt){
     toast("Couldn't read your saved progress, so it's been reset. Your questions are unaffected.","error");
   }
