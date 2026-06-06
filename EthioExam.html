@@ -542,6 +542,8 @@ section#screen-home{max-width:var(--grid-max);}
   #app{padding:calc(var(--page-pad-laptop) + env(safe-area-inset-top)) var(--page-pad-laptop) var(--page-pad-laptop);}
   .session-header{margin:calc(-1*(var(--page-pad-laptop) + env(safe-area-inset-top))) calc(-1*var(--page-pad-laptop)) var(--sp-4);padding:calc(var(--sp-2) + env(safe-area-inset-top)) var(--page-pad-laptop) var(--sp-2);}
   .subject-grid{grid-template-columns:repeat(3,1fr);gap:var(--sp-5);}
+  /* Laptop/iPad: consistent, proportional card shape (phone 2-col layout untouched). */
+  .subject-card{aspect-ratio:3/2;min-height:0;}
   .progress-strip{gap:var(--sp-4);}
   .setup-actions .btn-primary{margin-left:0;}
 }
