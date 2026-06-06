@@ -1,10 +1,11 @@
 /* EthioExam service worker — offline app shell cache.
    Bump CACHE when EthioExam.html or assets change to force a refresh on devices. */
-const CACHE = 'ethioexam-v13';
+const CACHE = 'ethioexam-v14';
 const ASSETS = [
   './',
   './index.html',
   './EthioExam.html',
+  './qb-unverified.json',
   './manifest.webmanifest',
   './icon-192.png',
   './icon-512.png',
@@ -54,9 +55,12 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Static assets (icons, manifest) → CACHE-FIRST.
+  // Static assets (icons, manifest, qb-unverified.json) → CACHE-FIRST.
+  // ignoreSearch so the precached './qb-unverified.json' matches the app's
+  // versioned 'qb-unverified.json?v=N' request (works on a cold offline start,
+  // and version bumps reuse the entry instead of orphaning old ones).
   e.respondWith(
-    caches.match(req).then((cached) => cached || fetch(req).then((resp) => {
+    caches.match(req, { ignoreSearch: true }).then((cached) => cached || fetch(req).then((resp) => {
       if (resp && resp.ok && url.origin === self.location.origin) {
         const copy = resp.clone();
         caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
