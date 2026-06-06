@@ -1439,21 +1439,14 @@ let UNVERIFIED_LOADED=false; let _unvLoading=null;
 function loadUnverified(){
   if(UNVERIFIED_LOADED) return Promise.resolve(true);
   if(_unvLoading) return _unvLoading;
-  _unvLoading = new Promise(function(resolve){
-    const s=document.createElement("script");
-    s.src="qb-unverified.js?v=7";
-    s.onload=function(){
-      try{
-        const U=window.QB_UNVERIFIED||{};
-        ["Physics","Chemistry","Biology","Mathematics"].forEach(function(subj){
-          (U[subj]||[]).forEach(function(row){ const h=hydrateRow(row,subj); if(h) CURATED_BANK.push(h); });
-        });
-        UNVERIFIED_LOADED=true; resolve(true);
-      }catch(e){ resolve(false); }
-    };
-    s.onerror=function(){ resolve(false); };
-    document.head.appendChild(s);
-  });
+  // Fetch as JSON (allowed by connect-src 'self'); keeps the strict script-src CSP intact.
+  _unvLoading = fetch("qb-unverified.json?v=7").then(function(r){ return r.ok ? r.json() : null; }).then(function(U){
+    if(!U) return false;
+    ["Physics","Chemistry","Biology","Mathematics"].forEach(function(subj){
+      (U[subj]||[]).forEach(function(row){ const h=hydrateRow(row,subj); if(h) CURATED_BANK.push(h); });
+    });
+    UNVERIFIED_LOADED=true; return true;
+  }).catch(function(){ return false; });
   return _unvLoading;
 }
 
