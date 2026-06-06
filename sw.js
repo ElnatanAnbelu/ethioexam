@@ -1,6 +1,6 @@
 /* EthioExam service worker — offline app shell cache.
    Bump CACHE when EthioExam.html or assets change to force a refresh on devices. */
-const CACHE = 'ethioexam-v10';
+const CACHE = 'ethioexam-v11';
 const ASSETS = [
   './',
   './index.html',
